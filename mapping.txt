@@ -1,7 +1,7 @@
 BIT | ISO FIELD NAME | DATA TYPE | REQ | NOTES
 --- | --- | --- | --- | ---
 --- TABLE 2-1: 0100 AUTHORIZATION REQUEST ---
-0.1 | Terminal Application Header | ans 3 | C | Worldpay requires this bit for merchants who process using the Terminal Processing platform.
+0.1 | Terminal Application Header | ans 3 | C | The processor requires this bit for merchants who process using the Terminal Processing platform.
 0.2 | Message Type ID | nP4 | M | 0100
 0.3 | Primary Bit Map | b64 | M | This bitmap indicates the presence of fields 1 - 64.
 001 | Secondary Bit Map | b64 | C | If the message includes any field from Field 65 through Field 128, the request requires this field.
@@ -31,7 +31,7 @@ BIT | ISO FIELD NAME | DATA TYPE | REQ | NOTES
 037 | Retrieval Reference Number | n12 | M | 
 038 | Authorization Identification Response | an6 | O | 
 041 | Card Acceptor Terminal Identification | ans15 | M | 
-042 | Card Acceptor Identification | ans15 | C | If you have a Worldpay-assigned merchant ID, you must send it in this field.
+042 | Card Acceptor Identification | ans15 | C | If you have a processor-assigned merchant ID, you must send it in this field.
 043 | Card Acceptor Name and Location Data | ans40 | M | 
 044 | Additional Response Data | LLL ans5 | O | 
 045 | Track I Data | LLL ans76 | C | For machine read cards, include either Field 35 - Track II Data or Field 45- Track I Data. For P2P encrypted transactions, Field 100.4 - Encrypted Track I replaces this field.
@@ -100,7 +100,7 @@ BIT | ISO FIELD NAME | DATA TYPE | REQ | NOTES
 037 | Retrieval Reference Number | an12 | M | 
 038 | Authorization Identification Response | an6 | C | The request requires this for EBT voucher clear transactions.
 041 | Card Acceptor Terminal Identification | ans15 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
-042 | Card Acceptor Identification | ans15 | C | If you have a Worldpay-assigned Merchant ID, you must include it in this field.
+042 | Card Acceptor Identification | ans15 | C | If you have a processor-assigned Merchant ID, you must include it in this field.
 043 | Card Acceptor Name and Location Data | ans40 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
 045 | Track I Data | LLL ans76 | C | For machine read cards, include either Field 35 - Track II Data or Field 45 - Track I Data. Omit this in a non-original resubmission message. For P2P encrypted transactions, Field 100.4 - Encrypted Track I replaces this field.
 048 | Additional Data (Private) | LLL ans255 | C | The request requires this for WIC inquiries.

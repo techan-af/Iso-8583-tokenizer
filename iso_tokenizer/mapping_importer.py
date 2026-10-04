@@ -1,4 +1,4 @@
-"""Compile the supplied Worldpay markdown tables into machine-readable profiles.
+"""Compile the supplied ISO 8583 markdown tables into machine-readable profiles.
 
 The importer retains each specification's raw type and notes. It deliberately
 does not claim that the mapping defines byte-level encodings.
@@ -69,7 +69,7 @@ def compile_mapping(source: str | Path, output_dir: str | Path) -> list[Path]:
             mti, title = heading.groups()
             key = "authorization" if mti == "0100" else "financial_request" if mti == "0200" else f"mti_{mti}"
             current = {
-                "name": f"worldpay_{key}",
+                "name": f"iso8583_{key}",
                 "version": "0.1.0",
                 "mti": mti,
                 "message_name": title.strip(),
@@ -79,7 +79,7 @@ def compile_mapping(source: str | Path, output_dir: str | Path) -> list[Path]:
                     "bitmap_encoding": "binary",
                     "text_encoding": "ascii",
                     "length_prefix_encoding": "ascii",
-                    "wire_assumptions": "Illustrative defaults only; confirm with the Worldpay transport/interface guide.",
+                    "wire_assumptions": "Illustrative defaults only; confirm with the applicable transport/interface guide.",
                 },
                 "fields": {},
                 "semantic_values": {},

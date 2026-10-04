@@ -38,7 +38,7 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     build = commands.add_parser("build-profiles", help="Compile mapping.txt to JSON profiles")
     build.add_argument("mapping", nargs="?", default="mapping.txt")
-    build.add_argument("--out", default="profiles/worldpay")
+    build.add_argument("--out", default="profiles/iso8583")
     for name in ("parse", "tokenize", "roundtrip"):
         command = commands.add_parser(name)
         command.add_argument("message")

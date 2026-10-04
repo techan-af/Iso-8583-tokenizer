@@ -7,7 +7,7 @@ A Python PoC that parses Openly Available ISO 8583 messages formats into a canon
 ```mermaid
 flowchart TD
     A[Raw ISO 8583 bytes] --> B[Profile-driven parser]
-    P[Worldpay JSON profile] --> B
+    P[ISO 8583 JSON profile] --> B
     B --> C[Canonical message and bitmap]
     C --> D[Field-aware tokenizer]
     P --> D
@@ -17,7 +17,7 @@ flowchart TD
     G --> H[ISO 8583 bytes]
 ```
 
-The profile supplies the message MTI, field names and source types, field lengths, requirement notes, semantic types, and wire-encoding settings. The parser and tokenizer use profile data rather than embedding Worldpay field-position rules in tokenizer logic.
+The profile supplies the message MTI, field names and source types, field lengths, requirement notes, semantic types, and wire-encoding settings. The parser and tokenizer use profile data rather than embedding processor-specific field-position rules in tokenizer logic.
 
 ## Functionality
 
@@ -40,23 +40,23 @@ Requires Python 3.11 or later. There are no runtime third-party dependencies. Ru
 Compile the profiles from the mapping:
 
 ```powershell
-python -m iso_tokenizer.cli build-profiles mapping.txt --out profiles/worldpay
+python -m iso_tokenizer.cli build-profiles mapping.txt --out profiles/iso8583
 ```
 
 This creates:
 
-- `profiles/worldpay/authorization.json` — MTI 0100
-- `profiles/worldpay/financial_request.json` — MTI 0200
+- `profiles/iso8583/authorization.json` — MTI 0100
+- `profiles/iso8583/financial_request.json` — MTI 0200
 
 ## Quick start
 
 Generate a synthetic authorization fixture, inspect it, tokenize it, and verify its round trip:
 
 ```powershell
-python -m iso_tokenizer.cli generate --profile profiles/worldpay/authorization.json --out synthetic.bin
-python -m iso_tokenizer.cli parse synthetic.bin --profile profiles/worldpay/authorization.json
-python -m iso_tokenizer.cli tokenize synthetic.bin --profile profiles/worldpay/authorization.json
-python -m iso_tokenizer.cli roundtrip synthetic.bin --profile profiles/worldpay/authorization.json
+python -m iso_tokenizer.cli generate --profile profiles/iso8583/authorization.json --out synthetic.bin
+python -m iso_tokenizer.cli parse synthetic.bin --profile profiles/iso8583/authorization.json
+python -m iso_tokenizer.cli tokenize synthetic.bin --profile profiles/iso8583/authorization.json
+python -m iso_tokenizer.cli roundtrip synthetic.bin --profile profiles/iso8583/authorization.json
 ```
 
 For a synthetic 0200 fixture, replace `authorization.json` with `financial_request.json` in the profile argument. CLI parse output redacts sensitive and identifier-like values. Tokenization output includes tokens, token IDs, numeric features, and configured keyed digests.
@@ -64,7 +64,7 @@ For a synthetic 0200 fixture, replace `authorization.json` with `financial_reque
 Available commands:
 
 ```text
-python -m iso_tokenizer.cli build-profiles [mapping.txt] --out profiles/worldpay
+python -m iso_tokenizer.cli build-profiles [mapping.txt] --out profiles/iso8583
 python -m iso_tokenizer.cli generate --profile PROFILE.json --out MESSAGE.bin
 python -m iso_tokenizer.cli parse MESSAGE.bin --profile PROFILE.json
 python -m iso_tokenizer.cli tokenize MESSAGE.bin --profile PROFILE.json
@@ -83,7 +83,7 @@ python -m unittest discover -s tests
 ```python
 from iso_tokenizer import ISO8583Parser, ISO8583Tokenizer, ISOProfile
 
-profile = ISOProfile.load("profiles/worldpay/authorization.json")
+profile = ISOProfile.load("profiles/iso8583/authorization.json")
 parser = ISO8583Parser(profile)
 message = parser.parse(raw_bytes)
 
@@ -109,4 +109,4 @@ Add a documented MTI table to the mapping, compile the updated mapping, then con
 
 ## Disclaimer
 
-This is a research PoC, not a payment-processing or certification implementation. Confirm wire encodings, framing, conditional requirements, and any composite-field layouts against the applicable Worldpay interface specification before using real messages. Use synthetic data for development. Do not log or persist raw sensitive values or the in-memory canonical sidecar; protect pseudonymization keys using an approved secrets-management process.
+This is a research PoC, not a payment-processing or certification implementation. Confirm wire encodings, framing, conditional requirements, and any composite-field layouts against the applicable interface specification before using real messages. Use synthetic data for development. Do not log or persist raw sensitive values or the in-memory canonical sidecar; protect pseudonymization keys using an approved secrets-management process.
