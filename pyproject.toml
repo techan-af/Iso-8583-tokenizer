@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worldpay-iso-tokenizer-poc"
+version = "0.1.0"
+description = "Profile-driven, reversible ISO 8583 parsing and tokenization research PoC"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+iso-tokenizer = "iso_tokenizer.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["iso_tokenizer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

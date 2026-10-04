@@ -1,0 +1,153 @@
+BIT | ISO FIELD NAME | DATA TYPE | REQ | NOTES
+--- | --- | --- | --- | ---
+--- TABLE 2-1: 0100 AUTHORIZATION REQUEST ---
+0.1 | Terminal Application Header | ans 3 | C | Worldpay requires this bit for merchants who process using the Terminal Processing platform.
+0.2 | Message Type ID | nP4 | M | 0100
+0.3 | Primary Bit Map | b64 | M | This bitmap indicates the presence of fields 1 - 64.
+001 | Secondary Bit Map | b64 | C | If the message includes any field from Field 65 through Field 128, the request requires this field.
+002 | Primary Account Number (PAN) | LLd nP19 | C | Include this field for instances of manually enter PAN; otherwise, include either Field 35 - Track II Data or 45 - Track I Data, or Field 100.2 - Encrypted PAN for P2P Encrypted transactions. For card network and EMVco tokens, this field contains the token.
+003 | Processing Code | nP6 | M | For refund transactions (that is, the value of this field is 20), merchants must limit their use of optional fields, like AVS and CVV2, to avoid denials by issuers.
+004 | Transaction Amount | nP12 | M | 
+005 | Settlement Amount | nP12 | C | Include this field if the transaction and settlement currencies are not the same.
+006 | Cardholder Billing Amount | nP12 | C | Include this field if the cardholder and settlement currencies are not the same.
+007 | Transmission Date and Time | nP10 | M | 
+009 | Settlement Conversion Rate | nP8 | O | 
+010 | Cardholder Billing Conversion Rate | nP8 | C | Include this field if the cardholder and transaction currencies are not the same.
+011 | Systems Trace Audit Number | nP6 | M | 
+012 | Local Transaction Time | nP6 | M | 
+013 | Local Transaction Date | nP4 | M | 
+014 | Expiration Date | nP4 | C | Include this field for key entered information.
+015 | Settlement Date | nP4 | O | 
+016 | Conversion Date | nP4 | C | Include this field if the transaction and settlement currencies are not the same.
+017 | Capture Date | nP4 | O | 
+018 | Merchant Type | nP4 | M | 
+019 | Acquiring Institution Country Code | nP3 | C | Include this field if the country code is not 840 (United States).
+021 | Forwarding Institution Country Code | nP3 | | 
+022 | Point of Service Entry Mode | nP4 | C | The request requires this field for transactions from a POS device.
+023 | Card Sequence Number | nP3 | C | The request may include this field if the merchant key enters the information or for chip data.
+025 | Point of Service Condition Code | nP2 | O | 
+032 | Acquiring Institution Identification Code | LLd nP11 | M | 
+035 | Track II Data | LLd nP37 | C | For machine read cards, include either Field 35 - Track II Data or Field 45- Track I Data. For P2P encrypted transactions, Field 100.3 - Encrypted Track II replaces this field.
+037 | Retrieval Reference Number | n12 | M | 
+038 | Authorization Identification Response | an6 | O | 
+041 | Card Acceptor Terminal Identification | ans15 | M | 
+042 | Card Acceptor Identification | ans15 | C | If you have a Worldpay-assigned merchant ID, you must send it in this field.
+043 | Card Acceptor Name and Location Data | ans40 | M | 
+044 | Additional Response Data | LLL ans5 | O | 
+045 | Track I Data | LLL ans76 | C | For machine read cards, include either Field 35 - Track II Data or Field 45- Track I Data. For P2P encrypted transactions, Field 100.4 - Encrypted Track I replaces this field.
+048 | Additional Data (Private) | LLL ans255 | C | The request requires this field for WIC inquiries.
+049 | Transaction Currency Code | nP3 | M | 
+051 | Cardholder Billing Currency Code | nP3 | C | Include this if the cardholder and settlement currencies are not the same
+052 | Personal Identification Number Data | b64 | C | The request requires this field if the cardholder enters a PIN at a device.
+054 | Additional Amounts | LLL ans120 | O | 
+055 | Integrated Circuit Card Data | LLL nP999 | C | If EMV data is available from an EMV card, the transaction should present it.
+059 | National Point of Service Geographic Data | LLL ans999 | O | 
+060 | Additional POS Data | LLL ans999 | M | 
+061 | Network Specific Information | LLL ans999 | O | 
+062 | Vantiv Transaction Data | LLL ans999 | M | See Vantiv Transaction Data on page 332 for subfield descriptions concerning individual requirements. All subfields are optional unless otherwise specified or are needed for a specific product. The entire length of the data portion of the field is LLL, and an 8-byte (64 bit) bit map describing the subfields present immediately follows it.
+062.2 | Terminal Sequence Number | nP6 | M | 
+062.3 | Transaction Qualifier | nP3 | O | 
+062.4 | Acquiring Institution Acronym | an4 | O | 
+062.6 | Owner Settlement Agent | an4 | O | 
+062.7 | Cardholder Settlement Agent | an4 | O | 
+062.8 | From Account Qualifier | nP3 | O | 
+062.9 | To Account Qualifier | nP3 | O | 
+062.22 | Check Type | an1 | O | 
+062.26 | Extended Store Number | an10 | C | The request requires this field for third-party gift card transactions.
+062.27 | Chain Code | an6 | C | The request requires this field for third-party gift card transactions.
+062.43 | Gift Card Restriction Value | an2 | O | This field is only for activation.
+062.46 | Draft Locator ID | an11 | O | 
+099 | Card Institution ID Code | LLd nP11 | O | 
+100 | P2P Encryption Data | LLL ans999 | C | The request only requires this field for P2P-encrypted transactions.
+102 | Account Identification I | LLd nP28 | O | 
+103 | Account Identification 2 | LLd nP28 | O | 
+110 | Transaction Dependent Pass Through Data | LLL ans999 | O | 
+115 | Terminal Specific Data | LLLL..ans 9,999 | C | The request requires this field for merchants who are processing using the Terminal Processing platform.
+120 | Additional Request Data | LLL ans999 | O | 
+121 | Additional Information | LLL..ans 999 | O | 
+123 | Merchant Name | an15 | O | 
+126 | Electronic Commerce/MOTO Indicator | LLL ans999 | C | The request requires this for electronic commerce transactions.
+--- TABLE 2-9: 0200 FINANCIAL TRANSACTION REQUEST ---
+0.1 | Terminal Application Header | ans 3 | C | The request requires this bit for merchants who process using the Terminal Processing platform.
+0.2 | Message Type ID | nP4 | M | 
+0.3 | Primary Bit Map | b64 | M | 
+001 | Secondary Bit Map | b64 | C | The request requires this if the message includes any field from Field 65 through Field 128.
+002 | Primary Account Number (PAN) | LLd nP19 | C | Include this field for manually entered PAN or for a non-original resubmission message. For P2P encrypted transactions, Field 100.2 - Encrypted PAN replaces this field. Token initiated transactions do not include this field. For card network and EMVco tokens, this field contains the token.
+003 | Processing Code | nP6 | M | For refund transactions (that is, the value for this field is 20), merchants must limit their use of optional fields, like AVS and CVV2, to avoid denials by issuers.
+004 | Transaction Amount | nP12 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+005 | Settlement Amount | nP12 | C | Include this field if the transaction and settlement currencies are not the same.
+006 | Cardholder Billing Amount | nP12 | C | Include this field if the cardholder and settlement currencies are not the same.
+007 | Transmission Date and Time | nP10 | M | 
+009 | Settlement Conversion Rate | nP8 | O | 
+010 | Cardholder Billing Conversion Rate | nP8 | C | 
+011 | Systems Trace Audit Number | nP6 | M | 
+012 | Local Transaction Time | nP6 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+013 | Local Transaction Date | nP4 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+014 | Expiration Date | nP4 | C | The request may include this field for key-entered information, and it requires it in a non-original resubmission message.
+015 | Settlement Date | nP4 | O | 
+016 | Conversion Date | nP4 | C | Include this field if the transaction and settlement currencies are not the same.
+017 | Capture Date | nP4 | O | 
+018 | Merchant Type | nP4 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+019 | Acquiring Institution Country Code | nP3 | C | Include if the country code is not 840 (US).
+021 | Forwarding Institution Country Code | nP3 | O | 
+022 | Point of Service Entry Mode | nP4 | C | The request requires this for transactions from a POS device. All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+023 | Card Sequence Number | nP3 | C | The request may include this if the merchant key enters the information or for chip data.
+025 | Point of Service Condition Code | nP2 | O | 
+028 | Transaction Fee Amount | X+an8 | C | This is mandatory for acquirers imposing a surcharge or rebate. All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+029 | Settlement Fee Amount | X+an8 | C | Include this field if the transaction and settlement currencies are not the same.
+032 | Acquiring Institution Identification Code | LLd nP11 | M | 
+035 | Track II Data | LLd nP37 | C | For machine read cards, include either Field 35 - Track II Data or Field 45 - Track I Data. All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process. Omit this field in a non-original resubmission message. For P2P encrypted transactions, Field 100.3 - Encrypted Track II replaces this field.
+037 | Retrieval Reference Number | an12 | M | 
+038 | Authorization Identification Response | an6 | C | The request requires this for EBT voucher clear transactions.
+041 | Card Acceptor Terminal Identification | ans15 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+042 | Card Acceptor Identification | ans15 | C | If you have a Worldpay-assigned Merchant ID, you must include it in this field.
+043 | Card Acceptor Name and Location Data | ans40 | M | All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission process.
+045 | Track I Data | LLL ans76 | C | For machine read cards, include either Field 35 - Track II Data or Field 45 - Track I Data. Omit this in a non-original resubmission message. For P2P encrypted transactions, Field 100.4 - Encrypted Track I replaces this field.
+048 | Additional Data (Private) | LLL ans255 | C | The request requires this for WIC inquiries.
+049 | Transaction Currency Code | nP3 | M | 
+051 | Cardholder Billing Currency Code | nP3 | C | Include this if the cardholder and settlement currencies are not the same.
+052 | Personal Identification Number Data | b64 | C | The request requires this if the cardholder enters a PIN at a terminal.
+053 | AMEX Card Identifier | LLb ans4 | O | 
+054 | Additional Amounts | LLL ans120 | C | The request sends this if transaction-related amounts are present. All submissions and resubmissions of merchant authorized transactions must contain the original data element value. These items must remain the same throughout the life of the submission/resubmission processed amounts are present.
+055 | Integrated Circuit Card Data | LLL nP999 | C | If EMV data is available from an EMV card, the request should present it.
+057 | Card Product Type | ans3 | O | 
+059 | National Point of Service Geographic Data | LLL ans999 | O | 
+060 | Additional POS Data | LLL ans999 | M | Subfield 6 must have a value of 4 for preauthorized debit. For more information, see POS Transaction Status Indicator on page 317.
+061 | Network Specific Information | LLL ans999 | O | 
+062 | Vantiv Transaction Data | LLL ans999 | M | See Vantiv Transaction Data on page 332 for subfield descriptions concerning individual requirements. All subfields are optional unless otherwise specified or are needed for a specific product. The entire length of the data portion of the field is LLL, and an 8-byte (64 bit) bit map describing the subfields present immediately follows it.
+062.2 | Terminal Sequence Number | nP6 | M | 
+062.3 | Transaction Qualifier | nP3 | O | 
+062.4 | Acquiring Institution Acronym | an4 | O | 
+062.5 | Issuing Institution Acronym | an4 | O | 
+062.6 | Owner Settlement Agent | an4 | O | 
+062.7 | Cardholder Settlement Agent | an4 | O | 
+062.8 | From Account Qualifier | nP3 | O | 
+062.9 | To Account Qualifier | nP3 | O | 
+062.16 | Check Number | an6 | C | The request requires this for check cleared inquiry and stop payment.
+062.20 | Transaction Related Date | nP6 | C | The request requires this for merchant bill payment and stop payment.
+062.21 | New PIN | b64 | C | The request requires this for PIN change.
+062.22 | Check Type | an1 | O | 
+062.23 | Deposit Type | an1 | O | 
+062.28 | Routing Priority List | LLb ans255 | O | 
+062.30 | Preferred Debit Routing Flag | an1 | O | 
+062.31 | Card Conversion Flag | b1 | O | 
+062.32 | Special Inquiry Transaction Qualifier | an3 | O | 
+062.33 | Check Authorization Information (Deprecated) | LLb ans255 | C | The request requires this for ECC Check Conversion, Verification, and Guarantee transactions.
+062.43 | Gift Card Restriction Value | an2 | O | The request only uses this for activation.
+062.46 | Draft Locator ID | an11 | O | 
+062.52 | Bill Payment Payee Information | an75 | C | The request only uses this to transmit bill payment payee information on bill payment transactions.
+099 | Card Institution ID Code | LLd nP11 | O | 
+100 | P2P Encryption Data | LLL ans999 | C | The request only requires this for P2P Encrypted transactions.
+102 | Account Identification I | LLd nP28 | O | 
+103 | Account Identification 2 | LLd nP28 | O | 
+106 | WIC EBT Pass-Thru Field #1/Level 3 Authorization Descriptor Fields | LLL ans999 | C | The request only uses this for WIC purchase requests and voucher clear requests where it passes the information to the WIC processor.
+107 | WIC EBT Pass-Thru Field #2 | LLL ans999 | C | The request only uses this for purchase requests and voucher clear requests where it passes the information to the WIC processor.
+108 | WIC EBT Pass-Thru Field #3 | LLL ans999 | C | The request only uses this for WIC purchase requests and voucher clear requests only where it passes the information to the WIC processor.
+110 | Transaction Dependent Pass Through Data | LLL ans999 | O | 
+111 | Additional EBT Data | LLL ans52 | C | The request requires this for some EBT transactions.
+115 | Terminal Specific Data | LLLL..ans 9,999 | C | The request requires this bit for merchants who process using the Terminal Processing platform.
+120 | Additional Request Data | LLL ans999 | O | 
+121 | Additional Information | LLL..ans 999 | O | 
+123 | Merchant Name | an15 | O | 
+124 | Transaction Dependent Data | LLL ans999 | C | The request requires this for Mini-Statement transactions.
+126 | Electronic Commerce/MOTO Indicator | LLL ans999 | C | The request requires this for electronic commerce transactions.
